@@ -1,9 +1,9 @@
 .bg-custom {
-  background: #222d30;
+  background-color: #222d30 !important;
 }
 
 .bg-custom2 {
-  background: #121819;
+  background-color: #121819 !important;
 }
 
 body {
