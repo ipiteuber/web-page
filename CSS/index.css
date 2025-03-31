@@ -1,0 +1,45 @@
+/* Hero Section Styles */
+.hero-section {
+  overflow: hidden;
+}
+
+.hero-image {
+  height: 70vh;
+  object-fit: cover;
+}
+
+.hero-content {
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+
+.hero-title {
+  padding-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem !important;
+}
+
+.hero-button {
+  background-color: #1a373c;
+  border-color: #193439;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #121819;
+  border-color: #121819;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
