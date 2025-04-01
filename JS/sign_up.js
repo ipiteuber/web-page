@@ -1,7 +1,7 @@
 document.getElementById("signupForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Previene que se produzca la accion predeterminada de un elemento
+    event.preventDefault(); // Previene el envio automatico del formulario
 
-    // Se declaran variables
+    // Se declaran variables obteniendo input de usuario
     const fullName = document.getElementById("fullName").value;
     const username = document.getElementById("signupUser").value;
     const email = document.getElementById("signupEmail").value;
