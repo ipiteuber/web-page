@@ -1,0 +1,18 @@
+.btn {
+  background-color: #1a373c;
+  border-color: #193439;
+}
+
+.btn:hover {
+  background-color: #0f2124;
+  border-color: #0f2124;
+}
+
+
+a {
+  color: #193439
+}
+
+.bg-custom3 {
+  background-color: #2d4744;
+}
