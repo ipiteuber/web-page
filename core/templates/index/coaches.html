@@ -18,7 +18,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom2">
     <div class="container">
       <!-- Logo -->
-      <a class="navbar-brand" href="./index.html">
+      <a class="navbar-brand" href="{% url 'index' %}">
         <img src="{% static './images/logo.png' %}" alt="Logo" draggable="false" height="30">
       </a>
   
@@ -43,9 +43,9 @@
   
         <!-- Navigation links -->
         <ul class="navbar-nav ms-auto text-center">
-          <li class="nav-item"><a class="nav-link" href="./services.html">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="./coaches.html">Coaches</a></li>
-          <li class="nav-item"><a class="nav-link" href="./log_in.html">Log In</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'coaches' %}">Coaches</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
         </ul>
       </div>
     </div>
@@ -69,7 +69,7 @@
             <h3 class="card-title mb-1">Zellsis</h3>
             <p class="mb-3">Behavior Specialist - Valorant</p>
             <div class="d-flex justify-content-center">
-              <a href="./HTML_Coaches/zellsis.html" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
+              <a href="{% url 'zellsis' %}" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@
             <h3 class="card-title mb-1" style="color: #2a3a3d; font-weight: 7000;">TenZ</h3>
             <p class="mb-3">Aim Specialist - Valorant</p>
             <div class="d-flex justify-content-center">
-              <a href="./HTML_Coaches/tenz.html" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
+              <a href="{% url 'tenz' %}" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
             </div>
           </div>
         </div>
@@ -97,7 +97,7 @@
             <h3 class="card-title mb-1">S1mple</h3>
             <p class="mb-3">Strategy Specialist - Counter Strike 2</p>
             <div class="d-flex justify-content-center">
-              <a href="./HTML_Coaches/s1mple.html" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
+              <a href="{% url 's1mple' %}" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
             <h3 class="card-title mb-1">Tarik</h3>
             <p class="mb-3">Strategy Specialist - Counter Strike 2</p>
             <div class="d-flex justify-content-center">
-              <a href="./HTML_Coaches/tarik.html" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
+              <a href="{% url 'tarik' %}" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@
             <h3 class="card-title mb-1">Sinatraa</h3>
             <p class="mb-3">Strategy Specialist - Marvel Rivals</p>
             <div class="d-flex justify-content-center">
-              <a href="./HTML_Coaches/sinatraa.html" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
+              <a href="{% url 'sinatraa' %}" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@
             <h3 class="card-title mb-1">XQC</h3>
             <p class="mb-3">Strategy Specialist - Marvel Rivals</p>
             <div class="d-flex justify-content-center">
-              <a href="./HTML_Coaches/xqc.html" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
+              <a href="{% url 'xqc' %}" class="btn btn-sm btn-outline-dark mx-1">View Profile</a>
             </div>
           </div>
         </div>

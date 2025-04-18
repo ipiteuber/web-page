@@ -19,7 +19,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-custom2">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="{% url 'index' %}">
       <img src="{% static './images/logo.png' %}" alt="Logo" draggable="false" height="30">
     </a>
 
@@ -44,11 +44,11 @@
 
       <!-- Navigation links -->
       <ul class="navbar-nav ms-auto text-center align-items-center">
-        <li class="nav-item"><a class="nav-link" href="./services.html">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="./coaches.html">Coaches</a></li>
-        <li class="nav-item"><a class="nav-link" href="./log_in.html">Log In</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'coaches' %}">Coaches</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
         <li class="nav-item">
-          <a href="./cart.html">
+          <a href="{% url 'cart' %}">
             <img src="{% static './images/cart.png' %}" alt="Cart" draggable="false" height="30" width="30">
           </a>
         </li>        
@@ -63,7 +63,7 @@
     <div id="cart-items"></div>
     <hr>
     <p id="cart-total">Total: $0.00</p>
-    <button id="checkout-btn" class="btn btn-primary" onclick="window.location.href='./success_checkout.html'">Proceed to Checkout</button>
+    <button id="checkout-btn" class="btn btn-primary" onclick="window.location.href='{% url 'success_checkout' %}'">Proceed to Checkout</button>
   </div>
 
   <script src="{% static './js/view_cart.js' %}"></script>
