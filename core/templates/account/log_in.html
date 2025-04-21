@@ -58,19 +58,19 @@
       <!-- Title -->
       <h3 class="text-center mb-3">Log in to Flan's Game</h3>
       <!-- Log in -->
-      <form id="LoginForm" method= "POST">^
+      <form id="LoginForm" method= "POST">
       {% csrf_token %}
           <div class="mb-3">
               <label for="loginUser" class="form-label">Username</label>
-              <input type="text" class="form-control" id="loginUser">
-          </div>
-          <div class="mb-3">
+              <input type="text" name="username" id="loginUser" class="form-control">
+
               <label for="loginPassword" class="form-label">Password</label>
               <input type="password" class="form-control" id="loginPassword">
+              
+            <!-- Button -->
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
           </div>
-          <!-- Button -->
-          <button type="submit" class="btn btn-primary w-100" onclick="location.href='{% url 'welcome_log' %}'">Log in</button>
-      </form>
+        </form>
       <!-- Text -->
       <div class="text-center mt-3">
           <a href="{% url 'forgot_password' %}" class="text-decoration-none small">I forgot my password</a> |

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from core.views.auth import SignUpView, LoginView, LogoutView, DeleteAccountView
+from core.views1.auth import SignUpView, LoginView, LogoutView, DeleteAccountView
+
 
 urlpatterns = [
     path('', views.index, name='index'),
