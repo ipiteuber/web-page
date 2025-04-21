@@ -2,16 +2,16 @@ document.getElementById("SignupForm").addEventListener("submit", function(event)
     event.preventDefault(); // Previene el envio automatico del formulario
 
     // Se declaran variables obteniendo input de usuario
-    const fullName = document.getElementById("fullName").value.trim();
-    const username = document.getElementById("signupUser").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const dob = document.getElementById("dob").value.trim();
+    const fullname = document.getElementById("fullname").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const datebirth = document.getElementById("datebirth").value.trim();
     const phone = document.getElementById("phone").value.trim();
-    const password = document.getElementById("signupPassword").value.trim();
-    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirm_password = document.getElementById("confirm_password").value.trim();
 
     // Validar que no hayan campos vacios
-    if (!fullName || !username || !email || !dob || !password || !confirmPassword) {
+    if (!fullname || !username || !email || !datebirth || !password || !confirm_password) {
         alert("All required fields must be filled!");
         return;
     }
@@ -29,7 +29,7 @@ document.getElementById("SignupForm").addEventListener("submit", function(event)
         return;
     }
     // Valida que contrasenas sean identicas
-    if (password !== confirmPassword) {
+    if (password !== confirm_password) {
         alert("Passwords do not match!");
         return;
     }

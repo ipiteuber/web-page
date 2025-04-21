@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Obtener datos de las variables desde localStorage
-    const fullName = localStorage.getItem("fullName") || "";
+    const fullname = localStorage.getItem("fullname") || "";
     const username = localStorage.getItem("username") || "";
     const email = localStorage.getItem("email") || "";
-    const dob = localStorage.getItem("dob") || "";
+    const datebirth = localStorage.getItem("datebirth") || "";
     const phone = localStorage.getItem("phone") || "";
 
     // Rellena campos del formulario con los datos guardados
-    document.getElementById("fullName").value = fullName;
-    document.getElementById("signupUser").value = username;
-    document.getElementById("signupEmail").value = email;
-    document.getElementById("dob").value = dob;
+    document.getElementById("fullname").value = fullname;
+    document.getElementById("username").value = username;
+    document.getElementById("email").value = email;
+    document.getElementById("datebirth").value = datebirth;
     document.getElementById("phone").value = phone;
 });
 
@@ -19,17 +19,17 @@ document.getElementById("SignupForm").addEventListener("submit", function (event
     event.preventDefault(); // Previene el envio automatico del formulario
 
     // Obtener los valores de los inputs
-    const fullName = document.getElementById("fullName").value;
-    const username = document.getElementById("signupUser").value;
-    const email = document.getElementById("signupEmail").value;
-    const dob = document.getElementById("dob").value;
+    const fullname = document.getElementById("fullname").value;
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    const datebirth = document.getElementById("datebirth").value;
     const phone = document.getElementById("phone").value;
 
     // Guardar en localStorage (simulacion de base de datos)
-    localStorage.setItem("fullName", fullName);
+    localStorage.setItem("fullname", fullname);
     localStorage.setItem("username", username);
     localStorage.setItem("email", email);
-    localStorage.setItem("dob", dob);
+    localStorage.setItem("datebirth", datebirth);
     localStorage.setItem("phone", phone);
 
     // Mensaje de exito

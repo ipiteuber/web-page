@@ -61,32 +61,32 @@
       <form id="SignUpForm" method= "POST">
       {% csrf_token %}
           <div class="mb-3">
-              <label for="fullName" class="form-label">Full Name *</label>
-              <input type="text" class="form-control" id="fullName">
+              <label for="fullname" class="form-label">Full Name *</label>
+              <input type="text" name="fullname" id="fullname" class="form-control">
           </div>
           <div class="mb-3">
-              <label for="signupUser" class="form-label">Username *</label>
-              <input type="text" class="form-control" id="signupUser">
+              <label for="username" class="form-label">Username *</label>
+              <input type="text" name="username" id="username" class="form-control">
           </div>
           <div class="mb-3">
-              <label for="signupEmail" class="form-label">Email *</label>
-              <input type="email" class="form-control" id="signupEmail">
+              <label for="email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="email" name="email">
           </div>
           <div class="mb-3">
-              <label for="dob" class="form-label">Date of Birth *</label>
-              <input type="date" class="form-control" id="dob">
+              <label for="datebirth" class="form-label">Date of Birth *</label>
+              <input type="date" class="form-control" id="datebirth">
           </div>
           <div class="mb-3">
               <label for="phone" class="form-label">Phone (optional)</label>
               <input type="text" class="form-control" id="phone" pattern="\d{7,8}" placeholder="7 or 8 digit number">
           </div>
           <div class="mb-3">
-              <label for="signupPassword" class="form-label">Password *</label>
-              <input type="password" class="form-control" id="signupPassword">
+              <label for="password" class="form-label">Password *</label>
+              <input type="password" class="form-control" name="password" id="password">
           </div>
           <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirm Password *</label>
-              <input type="password" class="form-control" id="confirmPassword">
+              <label for="confirm_password" class="form-label">Confirm Password *</label>
+              <input type="password" class="form-control" name="confirm_password" id="confirm_password">
           </div>
           <!-- Button -->
           <button type="submit" class="btn btn-success w-100">Sign up</button>

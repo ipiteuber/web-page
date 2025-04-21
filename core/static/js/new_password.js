@@ -2,11 +2,11 @@ document.getElementById("ChangePasswordForm").addEventListener("submit", functio
     event.preventDefault(); // Previene el envio automatico del formulario
 
     // Se declaran variables obteniendo input de usuario
-    const password = document.getElementById("signupPassword").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+    const password = document.getElementById("password").value;
+    const confirm_password = document.getElementById("confirm_password").value;
 
     // Valida que contrasenas sean identicas
-    if (password !== confirmPassword) {
+    if (password !== confirm_password) {
         alert("Passwords do not match!");
         return;
     }
