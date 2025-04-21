@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import TemplateView
 
+# Paginas protegidas exclusivas para uso de usuario autenticados
 
 class ServicesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'index/services.html'
