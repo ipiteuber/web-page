@@ -61,11 +61,11 @@
       <form id="LoginForm" method= "POST">
       {% csrf_token %}
           <div class="mb-3">
-              <label for="loginUser" class="form-label">Username</label>
+              <label for="username" class="form-label">Username</label>
               <input type="text" name="username" id="loginUser" class="form-control">
 
-              <label for="loginPassword" class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" id="loginPassword">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" id="password">
 
             <!-- Button -->
             <button type="submit" class="btn btn-primary w-100">Log in</button>

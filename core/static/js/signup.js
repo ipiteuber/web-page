@@ -45,10 +45,6 @@ document.getElementById("SignUpForm").addEventListener("submit", function(event)
         alert("Password must be 8-12 characters long, include at least one uppercase letter, one number, and one special character.");
         return;
     }
-
-    // Guarda en localStorage (simula base de datos)
-    localStorage.setItem("user", username);
-    localStorage.setItem("email", email);
     
     // Redirige a pagina success
     window.location.href = "./success.html";
