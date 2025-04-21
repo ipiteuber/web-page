@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Manejar la actualizacion del perfil
-document.getElementById("signupForm").addEventListener("submit", function (event) {
+document.getElementById("SignupForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Previene el envio automatico del formulario
 
     // Obtener los valores de los inputs

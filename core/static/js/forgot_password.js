@@ -1,4 +1,4 @@
-document.getElementById("forgotForm").addEventListener("submit", function(event) {
+document.getElementById("ForgotPasswordForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Previene el envio automatico del formulario
 
     // Se declaran variables obteniendo input de usuario

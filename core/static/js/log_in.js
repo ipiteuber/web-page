@@ -1,4 +1,4 @@
-document.getElementById("loginForm").addEventListener("submit", function(event) {
+document.getElementById("LoginForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Previene el envio automatico del formulario
 
     // Se declaran variables obteniendo input de usuario
