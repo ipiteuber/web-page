@@ -102,6 +102,11 @@
     </div>
   </div>
 
+  <form method="post" action="{% url 'random_advice' %}">
+    {% csrf_token %}
+    <button class="btn btn-primary mt-3">Want a random advice?</button>
+  </form>
+
   <!-- About Us -->
   <div class="text-center mb-5" id="tell-me-more">
     <h1 class="fw-bold mb-3">About Us</h1>

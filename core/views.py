@@ -1,4 +1,9 @@
-from django.shortcuts import render
+import requests
+from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from core.models import Product
 
 # Create your views here.
 
@@ -14,6 +19,11 @@ def services(request):
 
 def coaches(request):
     return render(request, 'index/coaches.html')
+
+def random_advice(request):
+    r = requests.get('https://api.adviceslip.com/advice')
+    slip = r.json().get('slip', {})
+    return render(request, 'external/advice.html', {'advice': slip.get('advice')})
 
 # Account
 def login(request):
@@ -48,6 +58,23 @@ def welcome_log(request):
 
 def welcome_role(request):
     return render(request, 'account/welcome_role.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        return redirect('index') 
+    return render(request, 'account/delete_account.html')
+
+# Products
+def product_list(request):
+    products = Product.objects.all() 
+    return render(request, 'products/product_list.html', {'products': products})
 
 # Coaches
 def s1mple(request):

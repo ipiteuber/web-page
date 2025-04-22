@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 from core.views1.auth import SignUpView, LoginView, LogoutView, DeleteAccountView
 from core.views1.pages import ServicesView, CartView, ProfileView, WelcomeLogView
+from rest_framework import routers
+from core.views1.api import CoachViewSet, ProductViewSet
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -10,7 +13,7 @@ urlpatterns = [
     path('services/', ServicesView.as_view(), name='services'),
     #path('services/', views.services, name='services'),
     path('coaches/', views.coaches, name='coaches'),
-
+    path('advice/', views.random_advice, name='random_advice'),
 
     path('login/', LoginView.as_view(), name='login'),
     #path('login/', views.login, name='login'),
@@ -39,3 +42,9 @@ urlpatterns = [
     path('coaches/xqc/', views.xqc, name='xqc'),
     path('coaches/zellsis/', views.zellsis, name='zellsis'),
 ]
+
+router = routers.DefaultRouter()
+router.register(r'api/coaches', CoachViewSet)
+router.register(r'api/products', ProductViewSet)
+
+urlpatterns += router.urls

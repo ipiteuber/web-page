@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.hashers import make_password
 from django.views.generic.edit import FormView
-from core.forms import SignUpForm, LoginForm
+from core.forms import SignUpForm, LoginForm, ForgotPasswordForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -54,3 +54,8 @@ class DeleteAccountView(LoginRequiredMixin, View):
         user = request.user
         user.delete()
         return redirect('deleted')
+
+class ForgotPasswordView(FormView):
+    template_name = 'account/forgot_password.html'
+    form_class = ForgotPasswordForm
+
