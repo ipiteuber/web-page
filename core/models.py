@@ -2,20 +2,29 @@ from django.db import models
 
 # Create your models here.
 class User(models.Model):
-    email = models.EmailField(max_length=100, unique=True)
-    username = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(max_length=100, unique=True) # Unico y obligatorio
+    username = models.CharField(max_length=20, unique=True) # Unico y obligatorio
     fullname = models.CharField(max_length=75)
-    password = models.CharField(max_length=12)
-    phone = models.PositiveIntegerField(null=True, blank=True)
-    datebirth = models.DateField(null=True, blank=True)
+    password = models.CharField(max_length=128)
+    idnumber = models.PositiveIntegerField(unique=True) # Unico y obligatorio
+    phone = models.PositiveIntegerField(null=True, blank=True) # Opcional
+    datebirth = models.DateField(null=False) # Obligatorio
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.username
+
 
 class Role(models.Model):
     role_name = models.CharField(max_length=50, unique=True)
     description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.role_name
+
 
 class UserRole(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

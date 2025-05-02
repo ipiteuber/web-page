@@ -77,7 +77,11 @@
               <input type="date" class="form-control" id="datebirth" name="datebirth">
           </div>
           <div class="mb-3">
-              <label for="phone" class="form-label">Phone (optional)</label>
+            <label for="idnumber" class="form-label">ID number *</label>
+            <input type="text" class="form-control" id="idnumber" name="idnumber" pattern="\d{8,9}" placeholder="ID number (Without periods and hyphens)">
+          </div>
+          <div class="mb-3">
+              <label for="phone" class="form-label">Phone (Optional)</label>
               <input type="text" class="form-control" id="phone" name="phone" pattern="\d{7,8}" placeholder="7 or 8 digit number">
           </div>
           <div class="mb-3">

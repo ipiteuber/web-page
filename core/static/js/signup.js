@@ -39,7 +39,7 @@ document.getElementById("SignUpForm").addEventListener("submit", function(event)
     // Al menos una mayuscula
     // Al menos un numero
     // Al menos un caracter especial
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[<>@$!%*?&])[A-Za-z\d<>@$!%*?&]{8,12}$/;
 
     if (!passwordRegex.test(password)) {
         alert("Password must be 8-12 characters long, include at least one uppercase letter, one number, and one special character.");
