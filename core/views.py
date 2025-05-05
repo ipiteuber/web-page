@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
+from external_services.steam import get_steam_game_players
 from django.views.generic import FormView, ListView, CreateView, UpdateView, DeleteView
 from core.forms import SignUpForm, LoginForm, ForgotPasswordForm, ChangePasswordForm, UpdateProfileForm, ProductForm
 from core.models import User, Product
@@ -15,7 +16,8 @@ from django.contrib import messages
 
 # ---------------------- Index ----------------------
 def index(request):
-    return render(request, 'index/index.html')
+    cs2_players = get_steam_game_players(730)
+    return render(request, 'index/index.html', {'cs2_players': cs2_players})
 
 @login_required # Vista protegida para carrito
 def cart(request):

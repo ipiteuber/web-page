@@ -102,6 +102,13 @@
     </div>
   </div>
 
+  <!-- Steam Preview -->
+  <div class="container py-5 text-center text-light">
+    <h2 class="fw-bold mb-4">Steam Live Stats</h2>
+    <p class="fs-4">Currently <span class="fw-bold text-success">{{ cs2_players }}</span> players are online in <strong>CS2</strong></p>
+    <a href="{% url 'steam-stats' %}" class="btn btn-outline-light mt-3">View All Steam Stats</a>
+  </div>
+
   <!-- About Us -->
   <div class="text-center mb-5" id="tell-me-more">
     <h1 class="fw-bold mb-3">About Us</h1>
@@ -162,6 +169,14 @@
 
     </div>
   </div>
+
+  <!-- Book Now -->
+  <div class="text-center py-5 bg-dark text-light">
+    <h2 class="fw-bold mb-3">Ready to train?</h2>
+    <p class="fs-5">Book a session with our coaches in just a few clicks.</p>
+    <a href="{% url 'calendly' %}" class="btn btn-primary btn-lg mt-3">Book via Calendly</a>
+  </div>
+
 </body>
 
 <footer>

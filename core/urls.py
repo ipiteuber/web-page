@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from core import views
 from core.views import (
     LoginView, SignUpView, LogoutView, ForgotPasswordView,
     ProductListView, ProductCreateView, ProductUpdateView, 
     ProductDeleteView, ChangePasswordView, UpdateProfileView
 )
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
 # ---------------------- Index ----------------------
@@ -37,7 +38,7 @@ urlpatterns = [
     path('products/create/', ProductCreateView.as_view(), name='product_create'),
     path('products/<int:pk>/edit/', ProductUpdateView.as_view(), name='product_update'),
     path('products/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
-    
+
 # ---------------------- Coaches ----------------------
     path('coaches/s1mple/', views.s1mple, name='s1mple'),
     path('coaches/sinatraa/', views.sinatraa, name='sinatraa'),
@@ -45,4 +46,16 @@ urlpatterns = [
     path('coaches/tenz/', views.tenz, name='tenz'),
     path('coaches/xqc/', views.xqc, name='xqc'),
     path('coaches/zellsis/', views.zellsis, name='zellsis'),
+
+# ---------------------- APIs Rest ----------------------
+    path('api/coach/', include('core.API_Coach.urls')),
+    path('api/products/', include('core.API_Products.urls')),
+
+# ---------------------- Token DRF ----------------------
+    path('api/token/', obtain_auth_token, name='api_token_auth'),
+    path('api/auth/', include('core.API_Auth.urls')),
+
+# ---------------- Web Services Externos ----------------
+    path('api/external/', include('external_services.urls')),
+    
 ]
