@@ -56,12 +56,37 @@
     <!-- Card -->
     <div class="card p-4 shadow-sm" style="width: 320px;">
       <!-- Title -->
-      <h3 class="text-center mb-3">Welcome to Flan's Game Admin</h3>
-      <button class="btn btn-primary mt-3" onclick="location.href='{% url 'index' %}'">Go to Home</button>
+      <h3 class="text-center mb-3">Welcome to Flan's Game Staff</h3>
+      <button class="btn btn-primary mt-3" onclick="location.href='{% url 'index' %}'">Home</button>
       <button class="btn btn-primary mt-3" onclick="location.href='{% url 'profile' %}'">Edit profile</button>
-      <button class="btn btn-primary mt-3" onclick="location.href='{% url 'services' %}'">Modify Services</button>
+      <button class="btn btn-primary mt-3" onclick="location.href='{% url 'product_list' %}'">Manage Products</button>
+
+      <!-- Borrar cuenta -->
+      <form id="DeleteAccountForm" method="post" action="{% url 'delete_account' %}">
+        {% csrf_token %}
+        <button type="button" class="btn btn-danger mt-3 w-100" id="deleteBtn">Delete account</button>
+      </form>
     </div>
   </div>
 
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete your account.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById("DeleteAccountForm").submit();
+        }
+      });
+    });
+  </script>
 </body>  
 </html>

@@ -103,5 +103,40 @@
   </div>
   
   <script src="{% static 'js/signup.js' %}"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("SignUpForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+
+      fetch(form.action || "", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => {
+          if (response.ok) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Registration Successful',
+              text: 'You can now log in.',
+              confirmButtonText: 'Log in'
+            }).then(() => {
+              window.location.href = "{% url 'login' %}";
+            });
+          } else {
+            return response.text().then(html => {
+              document.body.innerHTML = html;
+            });
+          }
+        })
+        .catch(() => {
+          Swal.fire('Error', 'Something went wrong.', 'error');
+        });
+    });
+  </script>
+
 </body>
 </html>

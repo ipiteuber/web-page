@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import date
 
 # Create your models here.
 class User(models.Model):
@@ -6,9 +8,9 @@ class User(models.Model):
     username = models.CharField(max_length=20, unique=True) # Unico y obligatorio
     fullname = models.CharField(max_length=75)
     password = models.CharField(max_length=128)
-    idnumber = models.PositiveIntegerField(unique=True) # Unico y obligatorio
+    idnumber = models.CharField(max_length=9, unique=True, default="00000000") # Unico y obligatorio
     phone = models.PositiveIntegerField(null=True, blank=True) # Opcional
-    datebirth = models.DateField(null=False) # Obligatorio
+    datebirth = models.DateField(null=False, default=date(2000, 1, 1)) # Obligatorio
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -69,3 +71,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+class CartItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')

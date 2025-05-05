@@ -1,10 +1,10 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
-from .models import User, Role, UserRole
+from .models import User, Role, UserRole, Product
 import re
 
-# SignUpForm
+# Registro de usuario
 class SignUpForm(forms.ModelForm):
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(),
@@ -33,7 +33,7 @@ class SignUpForm(forms.ModelForm):
 
     def clean_idnumber(self):
         idnumber = self.cleaned_data.get('idnumber')
-        # Validar que el idnumber tenga entre 8 y 9 dígitos
+        # Valida que el idnumber tenga entre 8 y 9 digitos
         if len(str(idnumber)) < 8 or len(str(idnumber)) > 9:
             raise ValidationError("ID number must have between 8 and 9 digits.")
         return idnumber
@@ -46,7 +46,8 @@ class SignUpForm(forms.ModelForm):
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        password_regex = re.compile(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,12}$')
+        password_regex = re.compile(r'^(?=.*[A-Z])(?=.*\d)(?=.*[<>@$!%*?&]).{8,12}$')
+        # Valida que tenga las 4 validaciones de seguridad
         if not password_regex.match(password):
             raise ValidationError("Password must be 8-12 characters, include an uppercase letter, number, and special character.")
         return password
@@ -62,22 +63,27 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.password = make_password(self.cleaned_data["password"])
+        
         if commit:
             user.save()
 
+        try:
         # Asignar rol "client" por defecto
-        staff_role = Role.objects.get(role_name="client") # Obtiene rol
-        user_role = UserRole(user=user, role=client_role) # Asigna rol
-        user_role.save()
+            client_role = Role.objects.get(role_name="client") # Obtiene rol
+            user_role = UserRole(user=user, role=client_role) # Asigna rol
+        except Role.DoesNotExist:
+            # Puedes manejar esto como quieras, lanzar un error o ignorarlo
+            raise ValidationError("The default role 'client' does not exist.")
+
 
         return user
 
-# LoginForm
+# Inicio de sesion
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=20)
     password = forms.CharField(widget=forms.PasswordInput())
 
-# ProfileForm
+# Perfil
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -97,9 +103,38 @@ class ProfileForm(forms.ModelForm):
         if phone and not re.match(r'^\d{7,8}$', str(phone)):
             raise forms.ValidationError("Phone number must be 7 or 8 digits.")
         return phone
-    
 
-# ChangePasswordForm
+# Actualizacion de perfil
+class UpdateProfileForm(forms.ModelForm):
+    password = forms.CharField(required=False, widget=forms.PasswordInput())
+    confirm_password = forms.CharField(required=False, widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ['fullname', 'username', 'email', 'datebirth', 'phone']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        confirm = cleaned_data.get("confirm_password")
+
+        if password or confirm:
+            if password != confirm:
+                raise forms.ValidationError("Passwords do not match.")
+            password_regex = re.compile(r'^(?=.*[A-Z])(?=.*\d)(?=.*[<>@$!%*?&]).{8,12}$')
+            # Valida que tenga las 4 validaciones de seguridad
+            if not password_regex.match(password):
+                raise forms.ValidationError("Password must be 8-12 chars, include an uppercase, number, and symbol.")
+
+        return cleaned_data
+
+# Recuperacion de contrasena
+class ForgotPasswordForm(forms.Form):
+    username = forms.CharField(label="Username or Email")
+    idnumber = forms.IntegerField(label="ID Number")
+    datebirth = forms.DateField(label="Date of Birth", widget=forms.DateInput(attrs={'type': 'date'}))
+
+# Cambio de contrasena para recuperacion
 class ChangePasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -119,6 +154,14 @@ class ChangePasswordForm(forms.Form):
         if password and confirm and password != confirm:
             self.add_error("confirm_password", "Passwords do not match.")
 
-# ForgotPasswordForm
-class ForgotPasswordForm(forms.Form):
-    username = forms.CharField(label="Username or Email")
+# Producto
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'stock']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter product name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product description', 'rows': 3}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Price'}),
+            'stock': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Stock quantity'}),
+        }

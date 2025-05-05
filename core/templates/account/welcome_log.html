@@ -60,12 +60,35 @@
       <button class="btn btn-primary mt-3" onclick="location.href='{% url 'index' %}'">Go to Home</button>
       <button class="btn btn-primary mt-3" onclick="location.href='{% url 'profile' %}'">Edit profile</button>
       <button class="btn btn-primary mt-3" onclick="location.href='{% url 'logout' %}'">Log out</button>
-      <form method="post" action="{% url 'delete_account' %}">
+      
+      <!-- Borrar cuenta -->
+      <form id="DeleteAccountForm" method="post" action="{% url 'delete_account' %}">
         {% csrf_token %}
-        <button class="btn btn-primary mt-3" style="color: red;">Delete account</button>
+        <button type="button" class="btn btn-danger mt-3" id="deleteBtn">Delete account</button>
       </form>
     </div>
   </div>
 
+
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete your account.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById("DeleteAccountForm").submit();
+        }
+      });
+    });
+  </script>
 </body>  
 </html>

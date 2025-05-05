@@ -53,12 +53,7 @@
   <!-- Sign Up success -->
   <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow-sm text-center" style="width: 350px;">
-      <h1>Are you sure you want to delete your account?</h1>
-      <form method="POST">
-          {% csrf_token %}
-          <button type="submit">Yes, delete my account</button>
-      </form>
-      <a href="{% url 'profile' %}">Cancel</a>
+      <h1>Account successfully deleted!</h1>
     </div>
   </div>
 
