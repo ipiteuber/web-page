@@ -64,7 +64,7 @@
       <!-- Borrar cuenta -->
       <form id="DeleteAccountForm" method="post" action="{% url 'delete_account' %}">
         {% csrf_token %}
-        <button type="button" class="btn btn-danger mt-3 w-100" id="deleteBtn">Delete account</button>
+        <button type="button" class="btn btn-danger mt-3 w-100" id="deleteBtn" style="background-color: #dc3545; border-color: #dc3545;">Delete account</button>
       </form>
     </div>
   </div>
