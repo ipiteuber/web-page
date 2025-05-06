@@ -67,12 +67,25 @@ class SignUpView(FormView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        # Guarda el nuevo usuario
-        user = form.save(commit=False) # Crea instancia con datos del form
-        user.password = make_password(form.cleaned_data['password']) # Encripta contrasena
-        user.save() # Guarda usuario en BD
-        self.request.session['just_registered'] = True # Marca que usuario se registro
+        password = form.cleaned_data.get('password')
+        confirm_password = form.cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            messages.error(self.request, "Las contraseñas no coinciden.")
+            return redirect('signup')
+
+        user = form.save(commit=False)
+        user.password = make_password(password)
+        user.save()
+
+        self.request.session['just_registered'] = True
+        messages.success(self.request, "Te has registrado correctamente. Ahora puedes iniciar sesión.")
+        
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Hubo un error en el formulario. Por favor, revisa los campos.")
+        return super().form_invalid(form)
 
 # Recuperacion contrasena
 class ForgotPasswordView(FormView):
