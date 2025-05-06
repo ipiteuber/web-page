@@ -3,7 +3,8 @@ from core import views
 from core.views import (
     LoginView, SignUpView, LogoutView, ForgotPasswordView,
     ProductListView, ProductCreateView, ProductUpdateView, 
-    ProductDeleteView, ChangePasswordView, UpdateProfileView
+    ProductDeleteView, ChangePasswordView, UpdateProfileView, 
+    cart, cart_add, cart_remove, success_checkout
 )
 from rest_framework.authtoken.views import obtain_auth_token
 
@@ -12,8 +13,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('services/', views.services, name='services'),
     path('coaches/', views.coaches, name='coaches'),
-    path('advice/', views.random_advice, name='advice'),
-    path('cart/', views.cart, name='cart'), # Protegido
     path('delete-account/', views.delete_account_view, name='delete_account'),
 
 # ---------------------- Account ----------------------
@@ -57,5 +56,10 @@ urlpatterns = [
 
 # ---------------- Web Services Externos ----------------
     path('api/external/', include('external_services.urls')),
-    
+
+# ---------------------- Cart ----------------------
+    path('cart/', cart, name='cart'),
+    path('cart/add/<int:product_id>/', cart_add, name='cart_add'),
+    path('cart/remove/<int:item_id>/', cart_remove, name='cart_remove'),
+    path('checkout/', success_checkout, name='checkout'),
 ]

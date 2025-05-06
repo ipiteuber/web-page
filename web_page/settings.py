@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core.API_Auth',
     'core.API_Coach',
     'core.API_Products',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

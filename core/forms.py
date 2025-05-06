@@ -158,10 +158,14 @@ class ChangePasswordForm(forms.Form):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'stock']
+        fields = ['name', 'description', 'category', 'duration', 'is_active', 'image_path', 'price', 'stock']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter product name'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Product description', 'rows': 3}),
-            'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Price'}),
-            'stock': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Stock quantity'}),
+            'description': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': forms.TextInput(attrs={'class': 'form-control'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'image_path': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'stock': forms.NumberInput(attrs={'class': 'form-control'}),
         }

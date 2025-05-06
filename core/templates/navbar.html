@@ -1,37 +1,89 @@
 {% load static %}
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-custom2">
-    <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="{% url 'index' %}">
-        <img src="{% static 'images/logo.png' %}" alt="Logo" draggable="false" height="30">
-      </a>
-  
-      <!-- Toggle button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
-              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <!-- Search bar -->
-        <form class="d-flex mx-auto my-2 my-lg-0 w-100 justify-content-center">
-          <div class="input-group py-3" style="max-width: 400px;">
-            <input type="search" class="form-control border-end-0 rounded-start-2 py-2 bg-light text-dark" 
-              placeholder="Search" aria-label="Search">
-            <button class="btn border-start-0 rounded-end-1 px-3 bg-secondary text-white" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </form>
-  
-        <!-- Navigation links -->
-        <ul class="navbar-nav ms-auto text-center">
-          <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'coaches' %}">Coaches</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-        </ul>
-      </div>
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand" href="{% url 'index' %}">
+      <img src="{% static 'images/logo.png' %}" alt="Logo" draggable="false" height="30">
+    </a>
+
+    <!-- Toggle button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      <!-- Search bar -->
+      <form class="d-flex mx-auto my-2 my-lg-0 w-100 justify-content-center">
+        <div class="input-group py-3" style="max-width: 400px;">
+          <input type="search" class="form-control border-end-0 rounded-start-2 py-2 bg-light text-dark" 
+                placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-dark rounded-end border-start-0 bg-dark text-white" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- Navigation links -->
+      <ul class="navbar-nav ms-auto text-center align-items-center">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'services' %}">
+            <span class="d-lg-none"><i class="fas fa-concierge-bell me-1"></i>Services</span>
+            <span class="d-none d-lg-inline">Services</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'coaches' %}">
+            <span class="d-lg-none"><i class="fas fa-user-friends me-1"></i>Coaches</span>
+            <span class="d-none d-lg-inline">Coaches</span>
+          </a>
+        </li>
+
+        {% if user.is_authenticated %}
+
+          {% if user.is_staff %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'welcome_role' %}">
+                <span class="d-lg-none"><i class="fas fa-tools me-1"></i>Admin Panel</span>
+                <span class="d-none d-lg-inline">Admin Panel</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'welcome_log' %}">
+                <span class="d-lg-none"><i class="fas fa-columns me-1"></i>My Dashboard</span>
+                <span class="d-none d-lg-inline">My Dashboard</span>
+              </a>
+            </li>
+          {% endif %}
+
+          <!-- Logout as link -->
+          <li class="nav-item">
+            <a class="nav-link text-danger" href="#" onclick="document.getElementById('logout-form').submit();">
+              <span class="d-lg-none"><i class="fas fa-sign-out-alt me-1"></i> Log out</span>
+              <span class="d-none d-lg-inline">Log out</span>
+            </a>
+            <form id="logout-form" method="post" action="{% url 'logout' %}" class="d-none">
+              {% csrf_token %}
+            </form>
+          </li>
+
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">
+              <span class="d-lg-none"><i class="fas fa-sign-in-alt me-1"></i> Log in</span>
+              <span class="d-none d-lg-inline">Log in</span>
+            </a>
+          </li>
+        {% endif %}
+
+      </ul>
     </div>
+  </div>
 </nav>

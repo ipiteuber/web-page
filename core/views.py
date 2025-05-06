@@ -1,5 +1,5 @@
 import requests
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from core import models
 from django.views import View
 from django.urls import reverse_lazy
@@ -10,8 +10,9 @@ from django.contrib.auth.decorators import login_required
 from external_services.steam import get_steam_game_players
 from django.views.generic import FormView, ListView, CreateView, UpdateView, DeleteView
 from core.forms import SignUpForm, LoginForm, ForgotPasswordForm, ChangePasswordForm, UpdateProfileForm, ProductForm
-from core.models import User, Product
+from core.models import CartItem, User, Product
 from django.contrib import messages
+
 # Create your views here.
 
 # ---------------------- Index ----------------------
@@ -19,22 +20,13 @@ def index(request):
     cs2_players = get_steam_game_players(730)
     return render(request, 'index/index.html', {'cs2_players': cs2_players})
 
-@login_required # Vista protegida para carrito
-def cart(request):
-    return render(request, 'index/cart.html')
-
 @login_required
 def services(request):
-    return render(request, 'index/services.html')
+    services = Product.objects.filter(is_active=True)
+    return render(request, 'index/services.html', {'services': services})
 
 def coaches(request):
     return render(request, 'index/coaches.html')
-
-def random_advice(request):
-    r = requests.get('https://api.adviceslip.com/advice')
-    slip = r.json().get('slip', {})
-    return render(request, 'external/advice.html', {'advice': slip.get('advice')})
-
 
 # ---------------------- Account ----------------------
 # Inicio de sesion de usuario
@@ -107,7 +99,7 @@ class ForgotPasswordView(FormView):
 
 # Logout
 class LogoutView(View):
-    def get(self, request):
+    def post(self, request):
         logout(request)
         return redirect('login')
 
@@ -166,11 +158,9 @@ def code_password(request):
 
 @login_required
 def new_password(request):
+    if not request.session.get('reset_user_id'):
+        return redirect('forgot_password')
     return render(request, 'account/new_password.html')
-
-@login_required
-def success_checkout(request):
-    return render(request, 'account/success_checkout.html')
 
 @login_required
 def welcome_log(request):
@@ -179,10 +169,6 @@ def welcome_log(request):
 @login_required
 def welcome_role(request):
     return render(request, 'account/welcome_role.html')
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from django.contrib.auth import logout
 
 @login_required
 def delete_account_view(request):
@@ -238,3 +224,38 @@ def xqc(request):
 
 def zellsis(request):
     return render(request, 'coaches/zellsis.html')
+
+
+# ---------------------- Cart ----------------------
+@login_required
+def cart(request):
+    items = CartItem.objects.filter(user=request.user).select_related('product')
+    total = sum(i.product.price * i.quantity for i in items)
+    return render(request, 'index/cart.html', {
+        'cart_items': items,
+        'total': total
+    })
+
+@login_required
+def cart_add(request, product_id):
+    if request.method == 'POST':
+        p = get_object_or_404(Product, pk=product_id)
+        item, created = CartItem.objects.get_or_create(user=request.user, product=p)
+        if not created:
+            item.quantity = F('quantity') + 1
+        item.save()
+    return redirect('cart')
+
+@login_required
+def cart_remove(request, item_id):
+    if request.method == 'POST':
+        ci = get_object_or_404(CartItem, pk=item_id, user=request.user)
+        ci.delete()
+    return redirect('cart')
+
+@login_required
+def success_checkout(request):
+    if request.method == 'POST':
+        CartItem.objects.filter(user=request.user).delete()
+        return render(request, 'account/success_checkout.html')
+    return redirect('cart')
