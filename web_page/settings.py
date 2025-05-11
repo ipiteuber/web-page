@@ -9,11 +9,18 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+from decouple import config
+import oracledb
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 load_dotenv()
+
+# Inicializa Oracle Instant Client
+oracledb.init_oracle_client(lib_dir=r"C:\Oracle\instantclient_23_8")
+
+# TNS_ADMIN desde .env
+os.environ["TNS_ADMIN"] = config("TNS_ADMIN")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,11 +96,12 @@ WSGI_APPLICATION = 'web_page.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle',
-        'NAME': '127.0.0.1:1521/ORCLPDB',
-        'USER': 'Coaching_App',
-        'PASSWORD': 'Ff0303<3',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
     }
 }
+
 
 
 # Password validation
