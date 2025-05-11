@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'core.API_Coach',
     'core.API_Products',
     'widget_tweaks',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

@@ -7,6 +7,22 @@ from core.views import (
     cart, cart_add, cart_remove, success_checkout
 )
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+# Swagger schema view
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Coaching API",
+        default_version='v1',
+        description="Documentación API Coaching",
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
+
 
 urlpatterns = [
 # ---------------------- Index ----------------------
@@ -62,4 +78,8 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', cart_add, name='cart_add'),
     path('cart/remove/<int:item_id>/', cart_remove, name='cart_remove'),
     path('checkout/', success_checkout, name='checkout'),
+
+# ---------------------- Swagger ----------------------
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
