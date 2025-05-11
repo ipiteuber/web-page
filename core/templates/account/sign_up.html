@@ -30,7 +30,7 @@
       <div id="form-errors" class="alert alert-danger d-none mb-3"></div>
 
       <!-- Sign Up -->
-      <form id="SignUpForm" method="POST" action="{% url 'signup' %}">
+            <form id="SignUpForm" method="POST" action="{% url 'signup' %}">
           {% csrf_token %}
           <div class="mb-3">
               <label for="fullname" class="form-label">Full Name *</label>
@@ -64,7 +64,6 @@
               <label for="confirm_password" class="form-label">Confirm Password *</label>
               <input type="password" class="form-control" name="confirm_password" id="confirm_password" required>
           </div>          
-          <!-- Button -->
           <button type="submit" class="btn btn-success w-100">Sign up</button>
       </form>
       <!-- Text -->

@@ -11,7 +11,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['fullname', 'username', 'email', 'idnumber', 'datebirth', 'phone', 'password']
 
     def create(self, validated_data):
-        # Crear usuario y hashear contraseña
+
         password = validated_data.pop('password')
         user = User(**validated_data)
         user.set_password(password)
@@ -22,7 +22,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             client_role = Role.objects.get(role_name='client')
             UserRole.objects.create(user=user, role=client_role)
         except Role.DoesNotExist:
-            # Aquí puedes crearlo automáticamente o ignorar
             pass
 
         return user

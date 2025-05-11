@@ -59,7 +59,7 @@ class LoginView(FormView):
 class SignUpView(FormView):
     template_name = 'account/sign_up.html'
     form_class = SignUpForm
-    success_url = reverse_lazy('login') # Redirige al registrarse con exito
+    success_url = reverse_lazy('login')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -67,26 +67,19 @@ class SignUpView(FormView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        password = form.cleaned_data.get('password')
-        confirm_password = form.cleaned_data.get('confirm_password')
-
-        if password != confirm_password:
-            messages.error(self.request, "Las contraseñas no coinciden.")
-            return redirect('signup')
-
         user = form.save(commit=False)
-        user.password = make_password(password)
+        user.password = make_password(form.cleaned_data.get('password'))
         user.save()
 
         self.request.session['just_registered'] = True
-        messages.success(self.request, "Te has registrado correctamente. Ahora puedes iniciar sesión.")
+        messages.success(self.request, "You have successfully registered. You can now log in.")
         
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.error(self.request, "Hubo un error en el formulario. Por favor, revisa los campos.")
+        messages.error(self.request, "There was an error with the form. Please check the fields.")
         return super().form_invalid(form)
-
+    
 # Recuperacion contrasena
 class ForgotPasswordView(FormView):
     template_name = 'account/forgot_password.html'

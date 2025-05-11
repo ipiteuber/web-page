@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from .models import User, Role, UserRole, Product
+from django.core.validators import validate_email
 import re
 
 # Registro de usuario
@@ -27,13 +28,14 @@ class SignUpForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if not re.match(r'^[^\s@]+@[^\s@]+\.[^\s@]+$', email):
+        try:
+            validate_email(email)
+        except ValidationError:
             raise ValidationError("Enter a valid email address.")
         return email
 
     def clean_idnumber(self):
         idnumber = self.cleaned_data.get('idnumber')
-        # Valida que el idnumber tenga entre 8 y 9 digitos
         if len(str(idnumber)) < 8 or len(str(idnumber)) > 9:
             raise ValidationError("ID number must have between 8 and 9 digits.")
         return idnumber
@@ -47,7 +49,6 @@ class SignUpForm(forms.ModelForm):
     def clean_password(self):
         password = self.cleaned_data.get('password')
         password_regex = re.compile(r'^(?=.*[A-Z])(?=.*\d)(?=.*[<>@$!%*?&]).{8,12}$')
-        # Valida que tenga las 4 validaciones de seguridad
         if not password_regex.match(password):
             raise ValidationError("Password must be 8-12 characters, include an uppercase letter, number, and special character.")
         return password
@@ -63,19 +64,17 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.password = make_password(self.cleaned_data["password"])
-        
+
         if commit:
             user.save()
 
-        try:
-        # Asignar rol "client" por defecto
-            client_role = Role.objects.get(role_name="client") # Obtiene rol
-            user_role = UserRole(user=user, role=client_role) # Asigna rol
-            user_role.save()
-        except Role.DoesNotExist:
-            # Puedes manejar esto como quieras, lanzar un error o ignorarlo
-            raise ValidationError("The default role 'client' does not exist.")
-
+            try:
+                client_role = Role.objects.get(role_name="client")
+                user_role = UserRole(user=user, role=client_role)
+                user_role.save()
+            except Exception as e:
+                print(f"Error saving UserRole: {e}")
+                self.add_error(None, "Error while assigning the role to the user.")
 
         return user
 

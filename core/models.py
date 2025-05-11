@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from datetime import date
 
@@ -19,11 +20,10 @@ class UserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=20, unique=True)
     fullname = models.CharField(max_length=75)
-    password = models.CharField(max_length=128)
     idnumber = models.CharField(max_length=9, unique=True)
     phone = models.PositiveIntegerField(null=True, blank=True)
     datebirth = models.DateField(null=False)
