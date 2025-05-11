@@ -64,18 +64,8 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.password = make_password(self.cleaned_data["password"])
-
         if commit:
             user.save()
-
-            try:
-                client_role = Role.objects.get(role_name="client")
-                user_role = UserRole(user=user, role=client_role)
-                user_role.save()
-            except Exception as e:
-                print(f"Error saving UserRole: {e}")
-                self.add_error(None, "Error while assigning the role to the user.")
-
         return user
 
 # Inicio de sesion

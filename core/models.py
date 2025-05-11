@@ -59,7 +59,13 @@ class UserRole(models.Model):
     assigned_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'role')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'role'], name='unique_user_role')
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} -> {self.role.role_name}"
+
 
 class Coach(models.Model):
     user           = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 import requests
 from django.shortcuts import get_object_or_404, render, redirect
 from core import models
@@ -10,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from external_services.steam import get_steam_game_players
 from django.views.generic import FormView, ListView, CreateView, UpdateView, DeleteView
 from core.forms import SignUpForm, LoginForm, ForgotPasswordForm, ChangePasswordForm, UpdateProfileForm, ProductForm
-from core.models import CartItem, User, Product
+from core.models import CartItem, Role, User, Product, UserRole
 from django.contrib import messages
 
 # Create your views here.
@@ -67,14 +68,26 @@ class SignUpView(FormView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        user = form.save(commit=False)
+        user = form.save(commit=True)
         user.password = make_password(form.cleaned_data.get('password'))
         user.save()
 
+        try:
+            client_role = Role.objects.get(role_name="client")
+            user_role = UserRole.objects.create(user=user, role=client_role) 
+            print(f"UserRole creado: {user_role}")
+
+        except Role.DoesNotExist:
+            messages.error(self.request, "Default role 'client' does not exist.")
+            return self.form_invalid(form)
+
         self.request.session['just_registered'] = True
         messages.success(self.request, "You have successfully registered. You can now log in.")
-        
-        return super().form_valid(form)
+    
+        return JsonResponse({
+            'message': 'User registered successfully!',
+            'redirect_url': self.success_url
+        })
 
     def form_invalid(self, form):
         messages.error(self.request, "There was an error with the form. Please check the fields.")
