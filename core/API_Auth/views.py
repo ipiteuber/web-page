@@ -1,21 +1,18 @@
-from django.shortcuts import render
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
+from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from rest_framework.authtoken.models import Token
+from .serializers import RegisterSerializer
 
-# Create your views here.
 class RegisterUserView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        if not username or not password:
-            return Response({"error": "Missing fields"}, status=400)
+        serializer = RegisterSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        user = User.objects.create_user(username=username, password=password)
+        user = serializer.save()
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=status.HTTP_201_CREATED)
+        return Response({'token': token.key}, status=status.HTTP_201_CREATED)

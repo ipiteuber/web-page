@@ -71,6 +71,7 @@ class SignUpForm(forms.ModelForm):
         # Asignar rol "client" por defecto
             client_role = Role.objects.get(role_name="client") # Obtiene rol
             user_role = UserRole(user=user, role=client_role) # Asigna rol
+            user_role.save()
         except Role.DoesNotExist:
             # Puedes manejar esto como quieras, lanzar un error o ignorarlo
             raise ValidationError("The default role 'client' does not exist.")
