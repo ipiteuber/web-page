@@ -17,70 +17,7 @@
   </head>
 
 <body class="bg-custom">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-custom2">
-    <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="{% url 'index' %}">
-        <img src="{% static 'images/logo.png' %}" alt="Logo" draggable="false" height="30">
-      </a>
-  
-      <!-- Toggle button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
-              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <!-- Search bar -->
-        <form class="d-flex mx-auto my-2 my-lg-0 w-100 justify-content-center">
-          <div class="input-group py-3" style="max-width: 400px;">
-            <input type="search" class="form-control border-end-0 rounded-start-1 py-2 bg-light text-dark" 
-              placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-dark rounded-end border-start-0 bg-dark text-white" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </form>
-  
-
-        <!-- Normal links -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'services' %}">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'coaches' %}">Coaches</a>
-        </li>
-
-        {% if user.is_authenticated %}
-          {% if user.is_staff %}
-            <!-- Staff/Admin panel -->
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'welcome_role' %}">Admin Panel</a>
-            </li>
-          {% else %}
-            <!-- User logged -->
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'welcome_log' %}">My Dashboard</a>
-            </li>
-          {% endif %}
-
-          <!-- Logout when logged -->
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="{% url 'logout' %}">Log out</a>
-          </li>
-        {% else %}
-          <!-- No logged -->
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Log in</a>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-  </nav>
-
+  {% include 'navbar.html' %}
 
   <!-- Sign Up success -->
   <div class="d-flex justify-content-center align-items-center vh-100">

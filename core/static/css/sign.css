@@ -8,7 +8,16 @@
   border-color: #0f2124;
 }
 
-
 a {
   color: #193439
+}
+
+/* Contenedor de errores */
+#form-errors {
+  transition: all 0.3s ease;
+}
+
+#form-errors ul {
+  margin-bottom: 0;
+  padding-left: 1rem;
 }
