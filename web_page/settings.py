@@ -17,7 +17,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Inicializa Oracle Instant Client
-oracledb.init_oracle_client(lib_dir=r"C:\Oracle\instantclient_23_8")
+oracledb.init_oracle_client(lib_dir="/home/meow/oracle/instantclient_23_8")
+
 
 # TNS_ADMIN desde .env
 os.environ["TNS_ADMIN"] = config("TNS_ADMIN")
