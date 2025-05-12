@@ -1,1 +1,32 @@
+# Entornos virtuales
+.venv/
+venv/
+pyvenv.cfg
+
+# Variables de entorno
 .env
+
+# Carpeta sql
+sql
+
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyc
+*.pyo
+
+# Ejecutables de Windows u otros sistemas
+*.exe
+*.bat
+*.ps1
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales y de logs (opcional)
+*.log
+*.tmp
+*.swp
